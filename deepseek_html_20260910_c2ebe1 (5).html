@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>В ДВИЖЕНИИ | Сервис безопасного пешего сопровождения детей на ЖБИ</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        *{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}body{font-family:'Inter',sans-serif;background:#f8fafc;color:#0f172a;line-height:1.6}.container{max-width:1200px;margin:0 auto;padding:0 20px}section{padding:60px 0}h1,h2,h3,h4{color:#0f172a;line-height:1.2}.gradient-text{background:linear-gradient(135deg,#2563eb,#7c3aed);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}.btn{display:inline-block;background:#2563eb;color:#fff;padding:14px 32px;font-weight:700;font-size:1rem;text-decoration:none;border-radius:12px;border:none;cursor:pointer;transition:all .2s;text-align:center}.btn:hover{background:#1d4ed8;transform:translateY(-2px)}.btn-secondary{background:transparent;color:#0f172a;border:2px solid #e2e8f0}.btn-secondary:hover{background:#f1f5f9;border-color:#94a3b8;transform:translateY(-2px)}
+        .header{background:rgba(255,255,255,.9);backdrop-filter:blur(12px);border-bottom:1px solid #e2e8f0;position:fixed;width:100%;top:0;left:0;z-index:1000;height:70px;display:flex;align-items:center}.header .container{display:flex;justify-content:space-between;align-items:center;width:100%}.logo{font-size:1.4rem;font-weight:900;color:#0f172a;text-decoration:none;letter-spacing:-.5px}.logo span{color:#2563eb}.geo-badge{background:#fef3c7;color:#92400e;font-size:.65rem;font-weight:700;padding:2px 10px;border-radius:20px;text-transform:uppercase;margin-left:8px;display:inline-block}.nav{display:flex;align-items:center;gap:24px}.nav a{color:#475569;text-decoration:none;font-weight:600;font-size:.9rem;transition:color .2s}.nav a:hover{color:#2563eb}.nav .btn{padding:8px 20px;font-size:.85rem}.nav .phone-link{color:#0f172a;font-weight:700;display:inline-flex;align-items:center;gap:6px;white-space:nowrap}.nav .phone-link i{color:#22c55e}.nav .phone-link:hover{color:#2563eb}.burger{display:none;flex-direction:column;gap:5px;background:0 0;border:none;cursor:pointer;padding:4px}.burger span{display:block;width:26px;height:3px;background:#0f172a;border-radius:4px;transition:all .3s}@media(max-width:992px){.burger{display:flex}.nav{position:fixed;top:0;right:-100%;width:300px;height:100vh;background:#fff;flex-direction:column;padding:80px 40px;gap:24px;box-shadow:-10px 0 30px rgba(0,0,0,.05);transition:right .3s}.nav.open{right:0}.nav a{font-size:1.1rem}}main{margin-top:70px}
+        .hero{background:linear-gradient(135deg,#eff6ff,#f8fafc);padding:40px 0 60px}.hero-wrapper{display:flex;align-items:center;gap:50px}.hero-content{flex:1.1}.hero-badges{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:20px;align-items:center}.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(37,99,235,.08);color:#1d4ed8;font-weight:700;font-size:.85rem;padding:6px 16px;border-radius:30px}.hero-phone-badge{display:inline-flex;align-items:center;gap:8px;background:#22c55e;color:#fff;font-weight:700;font-size:.85rem;padding:6px 16px;border-radius:30px;text-decoration:none;transition:all .2s;box-shadow:0 4px 12px rgba(34,197,94,.25);white-space:nowrap}.hero-phone-badge:hover{background:#16a34a;transform:translateY(-1px);color:#fff}.hero-phone-badge i{font-size:.85rem}.hero h1{font-size:2.8rem;font-weight:900;margin-bottom:16px;letter-spacing:-1px}.hero-text{font-size:1.15rem;color:#334155;margin-bottom:24px;max-width:540px}.tags-group{margin-bottom:16px}.tags-title{font-size:.75rem;font-weight:700;text-transform:uppercase;color:#94a3b8;letter-spacing:.5px;margin-bottom:6px}.tags{display:flex;flex-wrap:wrap;gap:6px}.tag{background:#fff;border:1px solid #e2e8f0;padding:4px 12px;border-radius:6px;font-size:.8rem;font-weight:600;color:#1e293b;cursor:pointer;transition:all .2s;user-select:none}.tag-school{border-color:#bfdbfe;color:#1d4ed8}.tag-school:hover{background:#eff6ff;border-color:#2563eb;box-shadow:0 2px 8px rgba(37,99,235,.15);transform:translateY(-1px)}.tag-direction{background:#f1f5f9;border-color:#cbd5e1}.tag-direction:hover{background:#e2e8f0;border-color:#94a3b8;transform:translateY(-1px)}.hero-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}.hero-map{flex:.9;height:420px;border-radius:20px;overflow:hidden;box-shadow:0 20px 40px -12px rgba(0,0,0,.15);border:3px solid #fff;position:relative;background:#e2e8f0}.hero-map #mapContainer{width:100%;height:100%}
+        /* ===== ПЛАШКА НА КАРТЕ ===== */
+        .map-badge{
+            position:absolute;bottom:16px;left:16px;
+            background:#0f172a;color:#fff;
+            padding:10px 18px;border-radius:12px;
+            font-weight:700;font-size:.95rem;
+            box-shadow:0 8px 20px rgba(0,0,0,.2);
+            z-index:10;
+            display:flex;align-items:center;gap:10px;
+            text-decoration:none;
+            cursor:pointer;
+            transition:transform .2s, box-shadow .2s, background .2s;
+        }
+        .map-badge:hover{
+            transform:translateY(-2px);
+            box-shadow:0 12px 28px rgba(15,23,42,.35);
+            background:#1e293b;
+            color:#fff;
+        }
+        .map-badge-fire{
+            font-size:1.2rem;
+            display:inline-block;
+            animation:firePulse 2.5s ease-in-out infinite;
+            transform-origin:center bottom;
+        }
+        @keyframes firePulse{
+            0%,100%{transform:scale(1) rotate(0)}
+            45%{transform:scale(1.15) rotate(-3deg)}
+            55%{transform:scale(1.15) rotate(3deg)}
+        }
+        .map-badge-text{
+            display:flex;flex-direction:column;line-height:1.15;
+        }
+        .map-badge-text strong{font-weight:800;font-size:.95rem}
+        .map-badge-text small{
+            font-weight:500;font-size:.7rem;
+            opacity:.75;letter-spacing:.2px;margin-top:2px;
+        }
+        @media(max-width:992px){.hero-wrapper{flex-direction:column;text-align:center}.hero-badges{justify-content:center}.hero h1{font-size:2.2rem}.hero-text{margin:0 auto 24px}.tags{justify-content:center}.hero-actions{justify-content:center}.hero-map{width:100%;height:320px}}@media(max-width:640px){.hero h1{font-size:1.8rem}.hero{padding:20px 0 40px}}
+        .pain-solution{background:#fff;border-bottom:1px solid #e2e8f0}.section-header{text-align:center;max-width:720px;margin:0 auto 40px}.pain-grid{display:flex;gap:40px}.pain-col,.solution-col{flex:1;display:flex;flex-direction:column;gap:16px}.pain-col h3,.solution-col h3{font-size:1.1rem;display:flex;align-items:center;gap:8px}.pain-col h3{color:#dc2626}.solution-col h3{color:#059669}.pain-card,.sol-card{padding:20px;border-radius:0 12px 12px 0;border-left:4px solid}.pain-card{background:#fef2f2;border-color:#dc2626}.sol-card{background:#f0fdf4;border-color:#22c55e}.pain-card h4,.sol-card h4{font-weight:700;margin-bottom:4px}.pain-card p,.sol-card p{color:#475569;font-size:.95rem}@media(max-width:992px){.pain-grid{flex-direction:column}}
+        .advantages{background:#f8fafc;border-bottom:1px solid #e2e8f0}.adv-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px}.adv-card{background:#fff;border:1px solid #e2e8f0;border-radius:16px;padding:28px;box-shadow:0 1px 3px rgba(0,0,0,.02)}.adv-icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;margin-bottom:16px}.adv-card h3{font-size:1.15rem;font-weight:700;margin-bottom:6px}.adv-card p{color:#475569;font-size:.95rem;line-height:1.6}@media(max-width:768px){.adv-grid{grid-template-columns:1fr}}
+        .how-it-works{background:#fff;border-bottom:1px solid #e2e8f0}.steps{display:flex;gap:30px;position:relative;justify-content:space-between}.steps::before{content:'';position:absolute;top:40px;left:10%;width:80%;height:2px;background:#e2e8f0;z-index:1}.step{flex:1;text-align:center;position:relative;z-index:2}.step-num{width:80px;height:80px;background:#0f172a;color:#fff;font-size:1.8rem;font-weight:800;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;border:4px solid #fff;box-shadow:0 8px 20px rgba(0,0,0,.05)}.step:nth-child(2) .step-num{background:#2563eb}.step:nth-child(3) .step-num{background:#f59e0b}.step h3{font-size:1.2rem;font-weight:700;margin-bottom:8px}.step p{color:#475569;font-size:.95rem;max-width:260px;margin:0 auto}@media(max-width:768px){.steps{flex-direction:column;gap:40px}.steps::before{display:none}.step p{max-width:100%}}
+        .rates-section{background:#fff;border-bottom:1px solid #e2e8f0}.table-wrap{overflow-x:auto;background:#fff;border-radius:16px;border:1px solid #e2e8f0;margin-bottom:30px}.rates-table{width:100%;border-collapse:collapse;min-width:700px}.rates-table th,.rates-table td{padding:16px 20px;border-bottom:1px solid #e2e8f0;font-size:.9rem;text-align:left}.rates-table th{background:#f8fafc;font-weight:700;text-transform:uppercase;font-size:.75rem;color:#64748b}.rates-table tr:last-child td{border-bottom:none}.col-cat{font-weight:700;color:#0f172a}.col-price{font-weight:800;color:#2563eb}.row-highlight td{background:rgba(37,99,235,.03)}.row-highlight .col-cat{color:#1d4ed8}.receipt-card{background:linear-gradient(135deg,#f0fdf4,#dcfce7);border:1px solid #bbf7d0;padding:20px 24px;border-radius:12px;display:flex;gap:16px;align-items:flex-start}.receipt-card i{font-size:1.8rem;color:#16a34a}.receipt-card h3{font-size:1.1rem;font-weight:700;color:#166534;margin-bottom:4px}.receipt-card p{color:#14532d;font-size:.9rem}@media(max-width:640px){.receipt-card{flex-direction:column}}
+        .faq-section{background:#fff;border-bottom:1px solid #e2e8f0}.faq-container{max-width:750px;margin:0 auto;display:flex;flex-direction:column;gap:12px}.faq-item{background:#fff;border:1px solid #e2e8f0;border-radius:12px;overflow:hidden}.faq-q{width:100%;background:0 0;border:none;text-align:left;padding:16px 20px;font-size:1rem;font-weight:700;color:#0f172a;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:12px}.faq-icon{color:#2563eb;transition:transform .2s;flex-shrink:0}.faq-item.active .faq-icon{transform:rotate(45deg)}.faq-a{max-height:0;overflow:hidden;transition:max-height .3s ease-out}.faq-a-inner{padding:0 20px 16px;color:#475569;font-size:.95rem;line-height:1.6}
+        .calculator-section{background:linear-gradient(135deg,#f0f4f8,#e2e8f0);border-bottom:1px solid #cbd5e0}.calc-wrapper{max-width:800px;margin:0 auto;background:#fff;border-radius:20px;box-shadow:0 10px 30px rgba(0,0,0,.05);border:1px solid #e2e8f0;overflow:hidden}.calc-progress{display:flex;background:#f8fafc;border-bottom:1px solid #e2e8f0;padding:14px 24px;justify-content:space-between;font-size:.8rem;font-weight:700;color:#94a3b8;gap:6px}.calc-progress .active{color:#2563eb}.calc-progress .done{color:#22c55e}.calc-body{padding:30px}.step-panel{display:none}.step-panel.active{display:block;animation:fadeIn .3s}@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}.form-group{margin-bottom:18px}.form-group label{display:block;font-weight:600;font-size:.9rem;margin-bottom:5px;color:#334155}.form-row{display:flex;gap:12px;flex-wrap:wrap}.form-row .form-group{flex:1;min-width:120px;margin-bottom:0}select,input{width:100%;padding:10px 14px;border:2px solid #e2e8f0;border-radius:10px;font-size:.95rem;outline:0;transition:border .2s;background:#fff;font-family:inherit}select:focus,input:focus{border-color:#2563eb}.radio-group{display:flex;gap:12px;flex-wrap:wrap}.radio-card{border:2px solid #e2e8f0;border-radius:12px;padding:14px 18px;cursor:pointer;flex:1;min-width:150px;transition:all .2s}.radio-card:hover{border-color:#94a3b8}.radio-card.selected{border-color:#2563eb;background:#eff6ff}.radio-card input{display:none}.radio-card h4{font-weight:700;font-size:1rem;margin-bottom:2px}.radio-card p{font-size:.8rem;color:#64748b}.calc-alert{background:#fffbeb;border:1px solid #fde68a;color:#92400e;padding:12px 16px;border-radius:8px;margin:12px 0;font-size:.9rem;display:none}.calc-nav{display:flex;justify-content:space-between;border-top:1px solid #e2e8f0;padding-top:20px;margin-top:20px;gap:10px}.calc-nav button{padding:10px 28px;font-weight:700;border:none;border-radius:10px;cursor:pointer;font-size:.95rem;transition:background .2s;font-family:inherit;display:inline-flex;align-items:center;gap:8px;justify-content:center}.btn-prev{background:#e2e8f0;color:#475569}.btn-prev:hover{background:#cbd5e1}.btn-next{background:#2563eb;color:#fff}.btn-next:hover{background:#1d4ed8}.btn-submit{background:#22c55e;color:#fff;min-width:180px}.btn-submit:hover:not(:disabled){background:#16a34a}.btn-submit:disabled{opacity:.6;cursor:not-allowed;transform:none;background:#94a3b8}.spinner{display:inline-block;width:20px;height:20px;border:2px solid rgba(255,255,255,.3);border-radius:50%;border-top-color:#fff;animation:spin .8s linear infinite;vertical-align:middle;margin-right:6px}@keyframes spin{to{transform:rotate(360deg)}}.summary-table{width:100%;border-collapse:collapse;background:#f8fafc;border-radius:12px;overflow:hidden;margin:16px 0}.summary-table td{padding:10px 16px;border-bottom:1px solid #e2e8f0;font-size:.9rem;vertical-align:top}.summary-table td:first-child{color:#64748b;white-space:nowrap}.summary-table tr:last-child td{border-bottom:none}.summary-total{background:rgba(37,99,235,.05);font-weight:700}.summary-total td:last-child{color:#2563eb;font-size:1.2rem}.policy-check{display:flex;align-items:center;gap:8px;font-size:.85rem;color:#64748b;margin-top:12px}.policy-check input{width:auto}.calendar-widget{max-width:340px;margin:0 auto;background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:16px}.calendar-header{display:flex;justify-content:space-between;align-items:center;font-weight:700;margin-bottom:12px}.calendar-header button{background:0 0;border:none;font-size:1.2rem;cursor:pointer;color:#2563eb;padding:0 8px}.calendar-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}.cal-day-name{font-size:.7rem;font-weight:700;color:#94a3b8;text-align:center;padding:4px 0}.cal-day{text-align:center;padding:8px 0;font-size:.9rem;font-weight:600;border-radius:6px;cursor:pointer;background:#f8fafc;transition:background .2s}.cal-day:hover:not(.empty){background:#e2e8f0}.cal-day.selected{background:#2563eb!important;color:#fff}.cal-day.empty{background:0 0;cursor:default}.cal-day.weekend{color:#ef4444}.cal-counter{text-align:center;margin-top:12px;font-weight:600;color:#2563eb}
+        #addressDisplayA,#addressDisplayB,#addressDisplayFriend{margin-top:6px;font-size:.85rem;color:#2563eb;font-weight:600}
+        .custom-notification{padding:14px 18px;border-radius:10px;margin:12px 0;font-weight:600;display:none;align-items:center;gap:10px;border:1px solid}.custom-notification.success{background:#dcfce7;color:#166534;border-color:#bbf7d0;display:flex}.custom-notification.error{background:#fef3c7;color:#92400e;border-color:#fde68a;display:flex}.custom-notification .icon{font-size:1.3rem;line-height:1;flex-shrink:0}.custom-notification .text{flex:1}.field-error{border-color:#dc2626!important;background-color:#fef2f2!important}.field-error:focus{border-color:#dc2626!important}.error-hint{color:#dc2626;font-size:.8rem;margin-top:4px;display:none}.hidden{display:none}
+        .footer{background:#0f172a;color:#94a3b8;padding:40px 0 20px;border-top:4px solid #2563eb}.footer .container{display:flex;flex-direction:column;gap:20px}.footer-top{display:flex;justify-content:space-between;flex-wrap:wrap;gap:30px}.footer-brand h3{color:#fff;font-size:1.2rem;font-weight:800;margin-bottom:6px}.footer-brand h3 span{color:#2563eb}.footer-brand p{color:#94a3b8;font-size:.9rem;max-width:320px}.footer-contacts{display:flex;flex-direction:column;gap:8px}.footer-contacts h4{color:#fff;font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:2px}.footer-contacts a{color:#fff;text-decoration:none;font-size:1rem;font-weight:700;display:inline-flex;align-items:center;gap:8px;transition:color .2s;white-space:nowrap}.footer-contacts a i{color:#22c55e;font-size:1.05rem}.footer-contacts a:hover{color:#22c55e}.footer-contacts .contact-note{color:#94a3b8;font-size:.8rem;line-height:1.5;max-width:260px}.footer-links{display:flex;gap:20px;align-items:flex-start}.footer-links a{color:#94a3b8;text-decoration:none;font-size:.9rem;transition:color .2s}.footer-links a:hover{color:#fff}.footer-bottom{border-top:1px solid #1e293b;padding-top:16px;display:flex;justify-content:space-between;font-size:.75rem;color:#64748b;flex-wrap:wrap;gap:10px}
+        .modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.5);z-index:2000;justify-content:center;align-items:center;padding:20px}.modal.active{display:flex}.modal-content{background:#fff;max-width:600px;width:100%;max-height:80vh;overflow-y:auto;padding:30px;border-radius:16px;position:relative}.modal-close{position:absolute;top:12px;right:16px;font-size:1.5rem;background:0 0;border:none;cursor:pointer;color:#94a3b8}.modal-close:hover{color:#0f172a}.modal h2{font-size:1.4rem;margin-bottom:16px}.modal p{color:#475569;margin-bottom:12px}
+
+        /* Тултипы */
+        .tag-tooltip {
+            position: fixed;
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 12px 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+            font-size: 0.9rem;
+            line-height: 1.5;
+            max-width: 320px;
+            z-index: 9999;
+            display: none;
+            pointer-events: none;
+            color: #1e293b;
+            font-weight: 500;
+            top: 0;
+            left: 0;
+        }
+        .tag-tooltip ul { margin: 6px 0 0 0; padding-left: 18px; font-weight: 400; }
+        .tag-tooltip ul li { list-style: disc; margin-bottom: 2px; }
+        .tag-tooltip .tooltip-title {
+            font-weight: 700; color: #0f172a;
+            border-bottom: 1px solid #e2e8f0;
+            padding-bottom: 4px; margin-bottom: 6px;
+        }
+        .tag-tooltip .tooltip-home {
+            font-size: 1.1rem; display: flex; align-items: center; gap: 6px;
+        }
+
+        /* ===== МОБИЛЬНАЯ АДАПТАЦИЯ ===== */
+        @media(max-width:640px){
+            .section-header h2{font-size:1.6rem!important}
+            .section-header p{font-size:1rem!important;margin-top:8px!important}
+            section{padding:40px 0}
+            .section-header{margin-bottom:28px}
+
+            .header{height:62px}
+            .header .container{padding:0 14px}
+            .logo{font-size:1.2rem}
+            .geo-badge{font-size:.58rem;padding:2px 7px;margin-left:4px}
+            .nav{padding:70px 28px;width:280px}
+            main{margin-top:62px}
+
+            .hero{padding:24px 0 40px}
+            .hero h1{font-size:1.75rem;letter-spacing:-.5px}
+            .hero-text{font-size:1rem}
+            .hero-badges{gap:8px;margin-bottom:16px}
+            .hero-badge,.hero-phone-badge{font-size:.72rem;padding:5px 12px}
+            .tag{font-size:.72rem;padding:3px 9px}
+            .tags-title{font-size:.68rem}
+            .hero-actions{gap:10px;margin-top:22px}
+            .btn{padding:12px 22px;font-size:.9rem}
+            .btn-secondary{padding:12px 22px;font-size:.9rem}
+            .hero-map{height:260px;border-radius:16px}
+
+            /* Плашка на карте — мобильная */
+            .map-badge{padding:8px 12px;bottom:10px;left:10px;gap:8px;border-radius:10px}
+            .map-badge-fire{font-size:1rem}
+            .map-badge-text strong{font-size:.8rem}
+            .map-badge-text small{font-size:.62rem}
+
+            .pain-card,.sol-card{padding:16px}
+            .pain-card h4,.sol-card h4{font-size:.95rem}
+            .pain-card p,.sol-card p{font-size:.88rem}
+
+            .adv-card{padding:20px}
+            .adv-icon{width:42px;height:42px;font-size:1.2rem;margin-bottom:12px}
+            .adv-card h3{font-size:1.05rem}
+            .adv-card p{font-size:.9rem}
+
+            .steps{gap:32px}
+            .step-num{width:64px;height:64px;font-size:1.5rem;border-width:3px;margin-bottom:12px}
+            .step h3{font-size:1.1rem}
+            .step p{font-size:.9rem}
+
+            .rates-table th,.rates-table td{padding:12px 14px;font-size:.85rem}
+            .receipt-card{padding:16px}
+            .receipt-card i{font-size:1.5rem}
+            .receipt-card h3{font-size:1rem}
+            .receipt-card p{font-size:.85rem}
+
+            .faq-q{padding:14px 16px;font-size:.92rem}
+            .faq-a-inner{padding:0 16px 14px;font-size:.88rem}
+
+            .calc-wrapper{border-radius:16px}
+            .calc-progress{padding:10px 12px;font-size:.65rem;gap:4px}
+            .calc-body{padding:20px 16px}
+            .step-panel h3{font-size:1.05rem;margin-bottom:14px}
+            .form-group label{font-size:.85rem}
+            .radio-card{min-width:130px;padding:12px 14px}
+            .radio-card h4{font-size:.9rem}
+            .radio-card p{font-size:.72rem}
+            select,input{padding:9px 12px;font-size:.9rem}
+            .summary-table td{padding:8px 12px;font-size:.85rem}
+            .summary-total td:last-child{font-size:1.05rem}
+            .calc-nav{padding-top:16px;margin-top:16px}
+            .calc-nav button{padding:9px 16px;font-size:.85rem;flex:1}
+            .btn-submit{min-width:auto!important}
+            .calendar-widget{max-width:100%;padding:12px}
+            .cal-day{padding:7px 0;font-size:.85rem}
+            .cal-day-name{font-size:.65rem}
+
+            .footer{padding:32px 0 16px}
+            .footer-top{gap:22px;flex-direction:column}
+            .footer-contacts a{font-size:.95rem}
+            .footer-links{flex-direction:column;gap:10px}
+            .footer-bottom{font-size:.7rem}
+            .footer-bottom>div{font-size:.7rem!important}
+
+            .modal-content{padding:22px;border-radius:14px}
+            .modal h2{font-size:1.15rem}
+            .modal p{font-size:.88rem}
+        }
+    </style>
+</head>
+<body>
+<header class="header">
+    <div class="container">
+        <a href="#" class="logo">В<span>•</span>ДВИЖЕНИИ</a>
+        <div style="display:flex;align-items:center;gap:12px;">
+            <span class="geo-badge">ЖБИ • Екатеринбург</span>
+            <button class="burger" id="burgerBtn" aria-label="Меню"><span></span><span></span><span></span></button>
+        </div>
+        <nav class="nav" id="navMenu">
+            <a href="#about">О сервисе</a>
+            <a href="#advantages">Почему я</a>
+            <a href="#how-it-works">Как работаем</a>
+            <a href="#rates">Тарифы</a>
+            <a href="#faq">Вопросы</a>
+            <a href="tel:+79953891423" class="phone-link"><i class="fas fa-phone"></i>+7 995 389-14-23</a>
+            <a href="#calculator" class="btn">Рассчитать</a>
+        </nav>
+    </div>
+</header>
+<main>
+    <!-- ===== ГЕРОЙ ===== -->
+    <section class="hero" id="about">
+        <div class="container">
+            <div class="hero-wrapper">
+                <div class="hero-content">
+                    <div class="hero-badges">
+                        <div class="hero-badge">📍 Маршрут построен!</div>
+                        <a href="tel:+79953891423" class="hero-phone-badge"><i class="fas fa-phone"></i>+7 995 389-14-23</a>
+                    </div>
+                    <h1>Безопасные шаги<br>вашего ребенка <span class="gradient-text">на ЖБИ</span></h1>
+                    <p class="hero-text">Профессиональное пешее сопровождение школьников из дома в класс, на секции, в школу и обратно. Разгружаем расписание занятых родителей.<br><strong>Учим правильно переходить дорогу, вместе изучаем и запоминаем маршрут.</strong></p>
+                    <div class="tags-group"><div class="tags-title">Школы района:</div><div class="tags">
+                        <span class="tag tag-school" data-coords="[56.8325, 60.6794]">№164</span>
+                        <span class="tag tag-school" data-coords="[56.829841, 60.689170]">№151</span>
+                        <span class="tag tag-school" data-coords="[56.834257, 60.696367]">№82</span>
+                        <span class="tag tag-school" data-coords="[56.838452, 60.686998]">№176</span>
+                        <span class="tag tag-school" data-coords="[56.837595, 60.67399]">№45</span>
+                        <span class="tag tag-school" data-coords="[56.834692, 60.674564]">№157</span>
+                        <span class="tag tag-school" data-coords="[56.8341, 60.673]">Индра</span>
+                    </div></div>
+                    <div class="tags-group"><div class="tags-title">Популярные направления:</div><div class="tags">
+                        <span class="tag tag-direction" data-coords="[56.834257, 60.696367]" data-type="music">🎵 Муз. школа (Бетонщиков, 3)</span>
+                        <span class="tag tag-direction" data-coords="[56.840454, 60.673864]" data-type="art">🎨 Школа искусств (Высоцкого, 4а)</span>
+                        <span class="tag tag-direction" data-type="sports" id="tagSports">⚽ Секции</span>
+                        <span class="tag tag-direction" data-type="clubs" id="tagClubs">🎭 Кружки</span>
+                        <span class="tag tag-direction" data-type="home" id="tagHome">🏠 Домой</span>
+                    </div></div>
+                    <div class="hero-actions"><a href="#calculator" class="btn">Рассчитать стоимость</a><a href="#rates" class="btn btn-secondary">Посмотреть тарифы</a></div>
+                </div>
+                <div class="hero-map">
+                    <div id="mapContainer"></div>
+                    <!-- Плашка-ссылка на калькулятор -->
+                    <a href="#calculator" class="map-badge" aria-label="Перейти к расчёту маршрута">
+                        <span class="map-badge-fire">🔥</span>
+                        <span class="map-badge-text">
+                            <strong>20+ маршрутов</strong>
+                            <small>от 200 ₽ за сопровождение</small>
+                        </span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== БОЛЬ И РЕШЕНИЕ ===== -->
+    <section class="pain-solution">
+        <div class="container"><div class="section-header"><h2 style="font-size:2.2rem;font-weight:800;">Разрываетесь между работой и новой логистикой кружков?</h2><p style="font-size:1.1rem;color:#475569;margin-top:12px;">Знакомая ситуация: рабочий день в разгаре, а ребенка нужно встретить из школы и вовремя увести на занятия. Такси отправлять страшно, а просить соседей каждый раз неудобно. Постоянный стресс и страх за каждый перекресток.</p></div>
+            <div class="pain-grid">
+                <div class="pain-col"><h3>💔 Реальность на районе:</h3>
+                    <div class="pain-card"><h4>Переезд Школы искусств</h4><p>В связи с ремонтом здания школы №151 все занятия Школы искусств перенесены на <strong>ул. Высоцкого, 4а</strong>. Теперь путь для многих увеличился вдвое!</p></div>
+                    <div class="pain-card"><h4>Музыкальная школа №13</h4><p>Ребятам из Музыкальной школы №13 теперь нужно ходить на занятия в здание <strong>школы №82 (Бетонщиков, 3)</strong>.</p></div>
+                    <div class="pain-card"><h4>ЖК «Каменные палатки»</h4><p>Первоклассникам из ЖК «Каменные палатки» чтобы попасть в школу, надо преодолеть чаще всего <strong>2 дороги</strong>.</p></div>
+                </div>
+                <div class="solution-col"><h3>✨ Решение от «В ДВИЖЕНИИ»:</h3>
+                    <div class="sol-card"><h4>⚠️ Опасные улицы под контролем</h4><p>Трамвайные пути и плотный поток машин больше не угрожают вашему ребенку. Переходим дороги строго по правилам, держа за руку.</p></div>
+                    <div class="sol-card"><h4>⏰ Спасенный рабочий график</h4><p>Не нужно отпрашиваться и бежать с работы посреди дня ради 20 минут пешей дороги по району. Мы полностью берем логистику на себя.</p></div>
+                    <div class="sol-card"><h4>🎒 Тяжелые сумки и инвентарь</h4><p>Сопровождающий поможет донести тяжелый музыкальный инструмент, рюкзак или спортивную форму до дверей класса.</p></div>
+                    <div class="sol-card"><h4>🚀 Выход найден!</h4><p>«В ДВИЖЕНИИ» берет ребенка из рук в руки и ведет строго по согласованному безопасному пути. Спокойствие родителей гарантировано.</p></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== ПОЧЕМУ Я ===== -->
+    <section class="advantages" id="advantages">
+        <div class="container"><div class="section-header"><span style="color:#2563eb;font-weight:700;font-size:.8rem;text-transform:uppercase;letter-spacing:.5px;display:inline-block;margin-bottom:8px;">Почему я</span><h2 style="font-size:2.2rem;font-weight:800;">Почему родители ЖБИ доверяют мне</h2><p style="font-size:1.1rem;color:#475569;margin-top:12px;">Я — ваш личный сопровождающий, который несёт полную ответственность за безопасность вашего ребёнка <strong>от двери до двери</strong>.</p></div>
+            <div class="adv-grid">
+                <div class="adv-card"><div class="adv-icon" style="background:#dbeafe;color:#2563eb;"><i class="fas fa-chalkboard-user"></i></div><h3>Большой педагогический и организаторский опыт</h3><p>Я имею многолетний опыт работы с детьми в образовательных и развивающих проектах. Отлично знаю детскую психологию и умею найти подход к каждому ребёнку. Кроме того, я сама — мама школьницы, поэтому все трудности родителей мне знакомы не понаслышке.</p></div>
+                <div class="adv-card"><div class="adv-icon" style="background:#d1fae5;color:#059669;"><i class="fas fa-house-signal"></i></div><h3>Местный житель</h3><p>Я выросла и живу в нашем микрорайоне. Отлично знаю все сложные участки: дворовые выезды, арки, Сиреневый бульвар и оживленный перекресток на Высоцкого.</p></div>
+                <div class="adv-card"><div class="adv-icon" style="background:#fef3c7;color:#d97706;"><i class="fas fa-message"></i></div><h3>Постоянная связь</h3><p>Вам не придется переживать и дозваниваться. Я остаюсь на связи с вами на протяжении всего маршрута и присылаю уведомления в мессенджере.</p></div>
+                <div class="adv-card"><div class="adv-icon" style="background:#f3e8ff;color:#7c3aed;"><i class="fas fa-clock"></i></div><h3>Индивидуальный подход</h3><p>Мы напрямую согласовываем точное расписание секций, кружков и уроков. Я помогу донести тяжелую папку и прослежу за порядком.</p></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== КАК ЭТО РАБОТАЕТ ===== -->
+    <section class="how-it-works" id="how-it-works">
+        <div class="container"><div class="section-header"><h2 style="font-size:2.2rem;font-weight:800;">Всего 3 шага к вашему спокойствию</h2></div>
+            <div class="steps">
+                <div class="step"><div class="step-num">01</div><h3>Оставляете заявку</h3><p>Вы указываете точный маршрут на ЖБИ, расписание занятий ребенка и ваши пожелания.</p></div>
+                <div class="step"><div class="step-num">02</div><h3>Знакомство со мной</h3><p>Мы знакомимся лично, обсуждаем все детали маршрута и я показываю, как буду сопровождать вашего ребенка.</p></div>
+                <div class="step"><div class="step-num">03</div><h3>Маршрут построен!</h3><p>Ребенок привыкает к стабильному ритуалу безопасных шагов, а вы получаете регулярные отчеты.</p></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== ОТЗЫВЫ (временно скрыты — уберите style="display:none" чтобы показать) ===== -->
+    <section class="reviews" style="display:none;">
+        <div class="container"><div class="section-header"><h2 style="font-size:2.2rem;font-weight:800;">Что говорят родители с ЖБИ</h2></div>
+            <div class="rev-grid">
+                <div class="rev-card"><div class="rev-stars">⭐⭐⭐⭐⭐</div><p class="rev-text">«Когда Школу искусств перевели на Высоцкого, 4а, у нас в семье началась паника. Самим водить нереально — работаем в центре, а отпускать сына одного через эту жуткую дорогу мы не решались. Сервис стал спасением! Сопровождающий забирает Егора прямо от дома, спокойно доводит пешком. Огромное спасибо за сохраненные нервы!»</p><div class="rev-author"><div class="rev-avatar">ОН</div><div><h4>Ольга Н.</h4><p>мама ученика Школы искусств, ЖК «Рассветный»</p></div></div></div>
+                <div class="rev-card"><div class="rev-stars">⭐⭐⭐⭐⭐</div><p class="rev-text">«Пользуемся услугой пакета "В одну сторону" — забирают дочку после продленки из 164-й школы. Несколько раз за месяц случались жесткие завалы на работе, и нас невероятно выручал экстренный тариф форс-мажора. Перевела предоплату, позвонила — через 15 минут дочку уже встретили».</p><div class="rev-author"><div class="rev-avatar">ИВ</div><div><h4>Игорь В.</h4><p>папа третьеклассницы, ул. Новгородцевой</p></div></div></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== ТАРИФЫ ===== -->
+    <section class="rates-section" id="rates">
+        <div class="container"><div class="section-header"><h2 style="font-size:2.2rem;font-weight:800;">Честный и прозрачный прайс-лист</h2><p style="color:#475569;">Никаких скрытых комиссий. Вы платите только за реальную безопасность вашего ребенка.</p></div>
+            <div class="table-wrap"><table class="rates-table"><thead><tr><th>Категория</th><th>Условия и тайминг</th><th>Цена за 1 ребёнка</th><th>🔥 Цена с другом</th></tr></thead><tbody>
+                <tr><td class="col-cat">🚨 Срочный Форс-мажор</td><td>Заказ «день в день» (непогода, аврал на работе или любое незапланированное сопровождение)</td><td class="col-price">600 ₽</td><td>— (только индивидуально)</td></tr>
+                <tr><td class="col-cat">🌱 Пробный / Разовый</td><td>1–3 выхода в месяц (в одну сторону)</td><td class="col-price">300 ₽</td><td>250 ₽ <span style="font-size:.75rem;color:#64748b;">(скидка 50 ₽)</span></td></tr>
+                <tr><td class="col-cat">🚶 В одну сторону (Пакет)</td><td>Отвод или встреча по стабильному графику (от 4 выходов)</td><td class="col-price">250 ₽</td><td>200 ₽ <span style="font-size:.75rem;color:#64748b;">(скидка 50 ₽)</span></td></tr>
+                <tr class="row-highlight"><td class="col-cat">⏳ Ждун (Короткий)</td><td>Отвод + ожидание на месте (макс. 2 урока по 40 мин) + возврат</td><td class="col-price">550 ₽</td><td><strong>400 ₽</strong> <span style="background:#fef3c7;padding:2px 8px;border-radius:12px;font-size:.7rem;font-weight:700;color:#b45309;">Мега-скидка 150 ₽!</span></td></tr>
+                <tr><td class="col-cat">🔄 Туда-Обратно (Длинный)</td><td>Отвод + занятие более 2 уроков (дольше 90 мин) + возврат</td><td class="col-price">450 ₽ за день <span style="font-size:.75rem;color:#64748b;">(225 ₽/рейс)</span></td><td>400 ₽ за день <span style="font-size:.75rem;color:#64748b;">(200 ₽/рейс)</span></td></tr>
+            </tbody></table></div>
+            <div class="receipt-card"><i class="fas fa-receipt"></i><div><h3>🧾 Официально и надёжно</h3><p>Я работаю официально как самозанятая. После каждой оплаты я отправляю вам на WhatsApp официальный электронный чек из приложения «Мой налог» со штрихкодом ФНС РФ. Вы всегда застрахованы юридически.</p></div></div>
+            <div style="margin-top:12px;font-size:.8rem;color:#64748b;text-align:center;background:#f8fafc;padding:10px;border-radius:8px;"><i class="fas fa-info-circle" style="color:#2563eb;"></i> * Скидка «С другом» применяется ко всем тарифам, кроме «Срочный Форс-мажор». Для «Туда-Обратно» цена указана за день, в скобках — за рейс.</div>
+        </div>
+    </section>
+
+    <!-- ===== FAQ ===== -->
+    <section class="faq-section" id="faq">
+        <div class="container"><div class="section-header"><h2 style="font-size:2.2rem;font-weight:800;">Часто задаваемые вопросы родителей</h2></div>
+            <div class="faq-container">
+                <div class="faq-item"><button class="faq-q"><span>Как подтверждается, что ребенок дошел?</span><span class="faq-icon">＋</span></button><div class="faq-a"><div class="faq-a-inner">Я отправляю текстовое сообщение в мессенджере в ключевых точках маршрута: когда забрала ребенка, когда передала педагогу или когда он вернулся домой. Вы всегда можете позвонить ребенку или получить подтверждение.</div></div></div>
+                <div class="faq-item"><button class="faq-q"><span>Почему пешком, а не на машине?</span><span class="faq-icon">＋</span></button><div class="faq-a"><div class="faq-a-inner">Да, можно возить детей в машине. Но в таком случае ребенок никогда самостоятельно не научится переходить дорогу и не выучит маршрут. Во время сопровождения пешком я учу ребенка правильно вести себя на пешеходном переходе и запоминать маршрут. Это навык на всю жизнь.</div></div></div>
+                <div class="faq-item"><button class="faq-q"><span>Можно ли выбрать постоянного сопровождающего?</span><span class="faq-icon">＋</span></button>
+                    <div class="faq-a"><div class="faq-a-inner">Да! Я веду все маршруты лично, поэтому ваш ребенок будет знать меня и чувствовать себя максимально комфортно. Мы знакомимся до <strong>начала первого движения</strong>.</div></div>
+                </div>
+                <div class="faq-item"><button class="faq-q"><span>Как работает тариф «С другом»?</span><span class="faq-icon">＋</span></button><div class="faq-a"><div class="faq-a-inner">Если вы договариваетесь с соседями или друзьями, и ваши дети идут по одному маршруту (точка сбора в радиусе 200 м от дома одного из детей или «по пути»), стоимость каждого тарифа снижается согласно таблице. Для «Туда-Обратно» специальная цена — 400 ₽ за день (200 ₽/рейс).</div></div></div>
+                <div class="faq-item"><button class="faq-q"><span>Как с вами связаться напрямую?</span><span class="faq-icon">＋</span></button><div class="faq-a"><div class="faq-a-inner">Позвоните мне по телефону <strong><a href="tel:+79953891423" style="color:#2563eb;text-decoration:none;">+7 995 389-14-23</a></strong> — отвечаю лично. Также вы можете заполнить форму-калькулятор на сайте — я свяжусь с вами сама в удобное время.</div></div></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== КАЛЬКУЛЯТОР ===== -->
+    <section class="calculator-section" id="calculator">
+        <div class="container"><div class="section-header"><h2 style="font-size:2.2rem;font-weight:800;">Подберите идеальный тариф</h2><p style="color:#475569;">Пройдите 5 простых шагов и получите точный расчёт стоимости для вашего маршрута на ЖБИ.</p></div>
+            <div class="calc-wrapper">
+                <div class="calc-progress"><span class="active" id="p-step-1">📍 Шаг 1</span><span id="p-step-2">🔄 Шаг 2</span><span id="p-step-3">👥 Шаг 3</span><span id="p-step-4">📅 Шаг 4</span><span id="p-step-5">✅ Финал</span></div>
+                <form id="mainCalcForm" onsubmit="event.preventDefault();">
+                    <div class="calc-body">
+                        <!-- ШАГ 1 -->
+                        <div class="step-panel active" id="step1">
+                            <h3>Шаг 1: 📍 Откуда и куда идём?</h3>
+                            <div class="form-group"><label>Выберите направление маршрута:</label>
+                                <div class="radio-group">
+                                    <label class="radio-card selected" id="dirHomeToInst"><input type="radio" name="direction" value="home-to-inst" checked><h4>🏠 Из дома → в учреждение</h4><p>Ребёнок идёт из дома в школу/кружок</p></label>
+                                    <label class="radio-card" id="dirInstToHome"><input type="radio" name="direction" value="inst-to-home"><h4>🏠 Из учреждения → домой</h4><p>Ребёнка забирают из школы/кружка домой</p></label>
+                                    <label class="radio-card" id="dirInstToInst"><input type="radio" name="direction" value="inst-to-inst"><h4>🔄 Между учреждениями</h4><p>Из одной секции в другую, из школы на кружок</p></label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label style="display:flex; align-items:center; gap:10px; font-weight:600; font-size:0.95rem; color:#334155; cursor:pointer;">
+                                    <input type="checkbox" id="forceMajeure" style="width:18px; height:18px; accent-color:#dc2626;">
+                                    <span>🚨 Срочный Форс-мажор (заказ «день в день», 600 ₽)</span>
+                                    <span style="font-size:0.7rem; background:#fef3c7; color:#b45309; padding:2px 10px; border-radius:12px; font-weight:700;">без скидки</span>
+                                </label>
+                            </div>
+                            <div id="pointABlock" class="form-group"><label id="pointALabel">Точка А (откуда) — адрес ребёнка:</label><div id="addressFieldsA" class="form-row"><div class="form-group"><select id="streetA" onchange="updateHouses('A')"><option value="">Выберите улицу...</option></select></div><div class="form-group"><select id="houseA" onchange="updateAddressDisplay('A')"><option value="">Дом...</option></select></div><div class="form-group"><select id="entranceA"><option value="">Подъезд</option></select></div></div><div id="instFieldsA" class="form-row" style="display:none;"><div class="form-group"><select id="instA" style="width:100%;"><option value="" disabled selected>Выберите учреждение...</option><optgroup label="🏫 Школы"><option value="Школа №164 (Новгородцевой, 17а)">Школа №164 (Новгородцевой, 17а)</option><option value="Школа №151 (Сиреневый бульвар, 15В)">Школа №151 (Сиреневый бульвар, 15В)</option><option value="Школа №82 (Бетонщиков, 3)">Школа №82 (Бетонщиков, 3)</option><option value="Гимназия №176 (Рассветная, 9)">Гимназия №176 (Рассветная, 9)</option><option value="Гимназия №45 (Новгородцевой, 5а)">Гимназия №45 (Новгородцевой, 5а)</option><option value="Школа №157 (Новгородцевой, 9а)">Школа №157 (Новгородцевой, 9а)</option><option value="ЧОУ СОШ «Индра» (Новгородцевой, 11а)">ЧОУ СОШ «Индра» (Новгородцевой, 11а)</option></optgroup><optgroup label="🎨 Кружки и клубы"><option value="Школа искусств (Высоцкого, 4а)">Школа искусств (Высоцкого, 4а)</option><option value="Музыкальная школа №13 (Бетонщиков, 3)">Музыкальная школа №13 (Бетонщиков, 3)</option><option value="Алгоритмика — программирование (Сыромолотова, 14)">Алгоритмика — программирование (Сыромолотова, 14)</option><option value="Изостудия «Краски мира» (Сиреневый бульвар, 15Б)">Изостудия «Краски мира» (Сиреневый бульвар, 15Б)</option><option value="Студия почерка «Литера» (Сиреневый бульвар, 15Б)">Студия почерка «Литера» (Сиреневый бульвар, 15Б)</option><option value="Клуб «Импульс» (Социум) (Сыромолотова, 14)">Клуб «Импульс» (Социум) (Сыромолотова, 14)</option><option value="Клуб «Россич» (Социум) (Сиреневый бульвар, 19а)">Клуб «Россич» (Социум) (Сиреневый бульвар, 19а)</option><option value="Клуб «Орион» (Социум) (Высоцкого, 10)">Клуб «Орион» (Социум) (Высоцкого, 10)</option><option value="Клуб «Мечта» (Социум) (Высоцкого, 22)">Клуб «Мечта» (Социум) (Высоцкого, 22)</option><option value="Станция технического творчества (Социум) (Рассветная, 13)">Станция технического творчества (Социум) (Рассветная, 13)</option><option value="Клуб Б6 (Бетонщиков, 6А)">Клуб Б6 (Бетонщиков, 6А)</option><option value="Центр «Лик» (40 лет ВЛКСМ, 31а)">Центр «Лик» (40 лет ВЛКСМ, 31а)</option><option value="ЦК «Молодежный» (Высоцкого, 22)">ЦК «Молодежный» (Высоцкого, 22)</option></optgroup><optgroup label="⚽ Спорт и секции"><option value="Спортшкола «Виктория» (Сыромолотова, 28а)">Спортшкола «Виктория» (Сыромолотова, 28а)</option><option value="Спортшкола «Виктория» (КОСК «Россия», Высоцкого, 14)">Спортшкола «Виктория» (КОСК «Россия», Высоцкого, 14)</option><option value="Спортшкола «Виктория» (Панельная, 17/1)">Спортшкола «Виктория» (Панельная, 17/1)</option><option value="Спортклуб «Ратиборец» (Сиреневый бульвар, 12)">Спортклуб «Ратиборец» (Сиреневый бульвар, 12)</option><option value="Школа айкидо «Ёсинкан Рювакан» (Сиреневый бульвар, 15Б)">Школа айкидо «Ёсинкан Рювакан» (Сиреневый бульвар, 15Б)</option><option value="Шахматный клуб «Этюд» (Социум) (Новгородцевой, 7Б)">Шахматный клуб «Этюд» (Социум) (Новгородцевой, 7Б)</option></optgroup><optgroup label="🏥 Другие учреждения"><option value="Детская поликлиника №13 (Высоцкого, 18а)">Детская поликлиника №13 (Высоцкого, 18а)</option></optgroup><option value="other">Другое (впишу сам)</option></select></div></div><div id="addressDisplayA"></div></div>
+                            <div id="pointBBlock" class="form-group"><label id="pointBLabel">Точка Б (куда) — учреждение:</label><div id="instFieldsB" class="form-row"><div class="form-group"><select id="instB" required style="width:100%;"><option value="" disabled selected>Выберите заведение...</option><optgroup label="🏫 Школы"><option value="Школа №164 (Новгородцевой, 17а)">Школа №164 (Новгородцевой, 17а)</option><option value="Школа №151 (Сиреневый бульвар, 15В)">Школа №151 (Сиреневый бульвар, 15В)</option><option value="Школа №82 (Бетонщиков, 3)">Школа №82 (Бетонщиков, 3)</option><option value="Гимназия №176 (Рассветная, 9)">Гимназия №176 (Рассветная, 9)</option><option value="Гимназия №45 (Новгородцевой, 5а)">Гимназия №45 (Новгородцевой, 5а)</option><option value="Школа №157 (Новгородцевой, 9а)">Школа №157 (Новгородцевой, 9а)</option><option value="ЧОУ СОШ «Индра» (Новгородцевой, 11а)">ЧОУ СОШ «Индра» (Новгородцевой, 11а)</option></optgroup><optgroup label="🎨 Кружки и клубы"><option value="Школа искусств (Высоцкого, 4а)">Школа искусств (Высоцкого, 4а)</option><option value="Музыкальная школа №13 (Бетонщиков, 3)">Музыкальная школа №13 (Бетонщиков, 3)</option><option value="Алгоритмика — программирование (Сыромолотова, 14)">Алгоритмика — программирование (Сыромолотова, 14)</option><option value="Изостудия «Краски мира» (Сиреневый бульвар, 15Б)">Изостудия «Краски мира» (Сиреневый бульвар, 15Б)</option><option value="Студия почерка «Литера» (Сиреневый бульвар, 15Б)">Студия почерка «Литера» (Сиреневый бульвар, 15Б)</option><option value="Клуб «Импульс» (Социум) (Сыромолотова, 14)">Клуб «Импульс» (Социум) (Сыромолотова, 14)</option><option value="Клуб «Россич» (Социум) (Сиреневый бульвар, 19а)">Клуб «Россич» (Социум) (Сиреневый бульвар, 19а)</option><option value="Клуб «Орион» (Социум) (Высоцкого, 10)">Клуб «Орион» (Социум) (Высоцкого, 10)</option><option value="Клуб «Мечта» (Социум) (Высоцкого, 22)">Клуб «Мечта» (Социум) (Высоцкого, 22)</option><option value="Станция технического творчества (Социум) (Рассветная, 13)">Станция технического творчества (Социум) (Рассветная, 13)</option><option value="Клуб Б6 (Бетонщиков, 6А)">Клуб Б6 (Бетонщиков, 6А)</option><option value="Центр «Лик» (40 лет ВЛКСМ, 31а)">Центр «Лик» (40 лет ВЛКСМ, 31а)</option><option value="ЦК «Молодежный» (Высоцкого, 22)">ЦК «Молодежный» (Высоцкого, 22)</option></optgroup><optgroup label="⚽ Спорт и секции"><option value="Спортшкола «Виктория» (Сыромолотова, 28а)">Спортшкола «Виктория» (Сыромолотова, 28а)</option><option value="Спортшкола «Виктория» (КОСК «Россия», Высоцкого, 14)">Спортшкола «Виктория» (КОСК «Россия», Высоцкого, 14)</option><option value="Спортшкола «Виктория» (Панельная, 17/1)">Спортшкола «Виктория» (Панельная, 17/1)</option><option value="Спортклуб «Ратиборец» (Сиреневый бульвар, 12)">Спортклуб «Ратиборец» (Сиреневый бульвар, 12)</option><option value="Школа айкидо «Ёсинкан Рювакан» (Сиреневый бульвар, 15Б)">Школа айкидо «Ёсинкан Рювакан» (Сиреневый бульвар, 15Б)</option><option value="Шахматный клуб «Этюд» (Социум) (Новгородцевой, 7Б)">Шахматный клуб «Этюд» (Социум) (Новгородцевой, 7Б)</option></optgroup><optgroup label="🏥 Другие учреждения"><option value="Детская поликлиника №13 (Высоцкого, 18а)">Детская поликлиника №13 (Высоцкого, 18а)</option></optgroup><option value="other">Другое (впишу сам)</option></select><input type="text" id="instBother" placeholder="Введите адрес" style="display:none;margin-top:8px;"></div></div><div id="addressFieldsB" class="form-row" style="display:none;"><div class="form-group"><select id="streetB" onchange="updateHouses('B')"><option value="">Выберите улицу...</option></select></div><div class="form-group"><select id="houseB" onchange="updateAddressDisplay('B')"><option value="">Дом...</option></select></div><div class="form-group"><select id="entranceB"><option value="">Подъезд</option></select></div></div><div id="addressDisplayB"></div></div>
+                            <div class="form-row"><div class="form-group"><label for="arrivalTime">⏰ Время прибытия:</label><input type="time" id="arrivalTime" value="08:00" required></div></div>
+                        </div>
+
+                        <!-- ШАГ 2 -->
+                        <div class="step-panel" id="step2">
+                            <h3>Шаг 2: 🔄 Нужен ли обратный маршрут?</h3>
+                            <div class="radio-group">
+                                <label class="radio-card selected" id="optNoReturn"><input type="radio" name="needReturn" value="no" checked><h4>Только «туда»</h4><p>Сопровождение в одну сторону.</p></label>
+                                <label class="radio-card" id="optReturn"><input type="radio" name="needReturn" value="yes"><h4>«Туда» и «обратно»</h4><p>Отведем и встретим.</p></label>
+                            </div>
+                            <div id="returnBlock" style="display:none;margin-top:16px;"><label for="returnTime">Во сколько забрать ребёнка?</label><input type="time" id="returnTime" value="12:00"></div>
+                            <div id="waitingHint" class="calc-alert" style="display:none;">⏳ Время ожидания: <span id="waitingDuration">0</span> ч. <span id="tariffRecommendation"></span></div>
+                        </div>
+
+                        <!-- ШАГ 3 -->
+                        <div class="step-panel" id="step3">
+                            <h3>Шаг 3: 👥 Вы пойдёте одни или с компанией?</h3>
+                            <div class="radio-group">
+                                <label class="radio-card selected" id="optSingle"><input type="radio" name="companyType" value="single" checked><h4>👤 Один ребёнок</h4><p>Базовый тариф без скидки</p></label>
+                                <label class="radio-card" id="optFriend"><input type="radio" name="companyType" value="friend"><h4>👥 Идём вдвоём с другом</h4><p>Скидка до 150 ₽!</p></label>
+                            </div>
+                            <div id="friendWarning" class="calc-alert" style="display:none;background:#fef3c7;border-color:#f59e0b;color:#b45309;">⚠️ Скидка применяется при одновременном сопровождении детей в радиусе 200 м.</div>
+                            <div id="friendAddressBlock" class="form-group" style="display:none;margin-top:16px;padding:16px;background:#f8fafc;border-radius:8px;border:1px solid #e2e8f0;"><label style="font-weight:700;margin-bottom:8px;">📍 Адрес друга (точка сбора):</label><div class="form-row"><div class="form-group"><select id="streetFriend" onchange="updateHouses('Friend')"><option value="">Улица...</option></select></div><div class="form-group"><select id="houseFriend" onchange="updateAddressDisplay('Friend')"><option value="">Дом...</option></select></div><div class="form-group"><select id="entranceFriend"><option value="">Подъезд</option></select></div></div><div id="addressDisplayFriend"></div></div>
+                        </div>
+
+                        <!-- ШАГ 4 -->
+                        <div class="step-panel" id="step4">
+                            <h3>Шаг 4: 📅 В какие дни нужен маршрут?</h3>
+                            <div class="calendar-widget"><div class="calendar-header"><button type="button" onclick="changeMonth(-1)">◀</button><span id="monthYearDisplay">Сентябрь 2026</span><button type="button" onclick="changeMonth(1)">▶</button></div><div class="calendar-grid" id="calendarGrid"></div><div class="cal-counter">Выбрано дней: <span id="selectedDaysCount">0</span></div></div>
+                        </div>
+
+                        <!-- ШАГ 5 -->
+                        <div class="step-panel" id="step5">
+                            <h3>Шаг 5: ✅ Ваш маршрут готов!</h3>
+                            <table class="summary-table"><tr><td>📌 Маршрут</td><td id="resRoute">—</td></tr><tr><td>⏰ Время прибытия</td><td id="resTime">—</td></tr><tr><td>🔄 Обратный</td><td id="resReturn">—</td></tr><tr><td>👥 Детей</td><td id="resChildren">—</td></tr><tr><td>📅 Дней</td><td id="resDays">—</td></tr><tr><td>💰 Тариф</td><td id="resTariff">—</td></tr><tr><td>💵 Цена за рейс</td><td id="resPrice">—</td></tr><tr class="summary-total"><td>💰 ИТОГО</td><td id="resTotal">0 ₽</td></tr></table>
+                            <div id="discountAlert" class="calc-alert" style="display:none;background:#dcfce7;border-color:#bbf7d0;color:#166534;">👥 Скидка за попутчика применена!</div>
+                            <div id="notificationSuccess" class="custom-notification success" style="display:none;"><span class="icon">✅</span><span class="text">Заявка успешно отправлена! Я свяжусь с вами в ближайшее время.</span></div>
+                            <div id="notificationError" class="custom-notification error" style="display:none;"><span class="icon">⚠️</span><span class="text">Не удалось отправить заявку. Данные сохранены локально. Позвоните мне по телефону <strong>+7 995 389-14-23</strong>.</span></div>
+                            <div class="form-row"><div class="form-group"><label for="userName">Ваше имя *</label><input type="text" id="userName" placeholder="Имя" required><div class="error-hint" id="userNameError">Пожалуйста, введите ваше имя.</div></div><div class="form-group"><label for="userPhone">Телефон *</label><input type="tel" id="userPhone" placeholder="+7" required><div class="error-hint" id="userPhoneError">Пожалуйста, введите ваш телефон.</div></div></div>
+                            <label class="policy-check"><input type="checkbox" id="agreement" required checked><span>Согласие на обработку персональных данных (ФЗ №152)</span></label>
+                            <div class="error-hint" id="agreementError" style="margin-top:4px;">Необходимо подтвердить согласие.</div>
+                        </div>
+
+                        <div class="calc-nav">
+                            <button type="button" class="btn-prev" id="btnPrev" onclick="goToStep(currentStep - 1)" style="display:none;">Назад</button>
+                            <button type="button" class="btn-next" id="btnNext" onclick="goToStep(currentStep + 1)">Далее →</button>
+                            <button type="button" class="btn-submit" id="btnSubmit" onclick="submitForm()" style="display:none;">
+                                <span id="submitText">Создать заявку</span>
+                                <span id="submitSpinner" class="spinner" style="display:none;"></span>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer class="footer">
+    <div class="container">
+        <div class="footer-top">
+            <div class="footer-brand">
+                <h3>В<span>•</span>ДВИЖЕНИИ</h3>
+                <p>Сервис сопровождения детей в микрорайоне ЖБИ, г. Екатеринбург</p>
+            </div>
+            <div class="footer-contacts">
+                <h4>Связаться со мной</h4>
+                <a href="tel:+79953891423"><i class="fas fa-phone"></i>+7 995 389-14-23</a>
+                <span class="contact-note">Звонки принимаю лично.<br>Отвечаю в течение 15 минут в рабочее время.</span>
+            </div>
+            <div class="footer-links">
+                <a href="#" id="openPolicyBtn">Политика конфиденциальности</a>
+            </div>
+        </div>
+        <div class="footer-bottom"><div>© 2026 Сервис сопровождения детей «В ДВИЖЕНИИ», г. Екатеринбург, мкр. ЖБИ.<br>Исполнитель: Самозанятый гражданин [Ваши ФИО] | ИНН: [Ваш 12-значный ИНН].<br>Не является публичной офертой. Деятельность ведётся в рамках Федерального закона № 422-ФЗ.</div><div style="font-size:.7rem;color:#475569;">ЖБИ 🏠</div></div>
+    </div>
+</footer>
+
+<div class="modal" id="policyModal">
+    <div class="modal-content"><button class="modal-close" id="closePolicyBtn">×</button><h2>Политика обработки персональных данных (ФЗ №152)</h2><p><strong>1. Оператор данных:</strong> Самозанятое лицо, услуги пешего сопровождения детей в рамках микрорайона ЖБИ, г. Екатеринбург.</p><p><strong>2. Цель сбора:</strong> Расчёт стоимости маршрута, обратная связь через мессенджеры.</p><p><strong>3. Конфиденциальность:</strong> Данные не передаются третьим лицам.</p><p><strong>4. Удаление:</strong> Вы можете отозвать согласие в любой момент.</p></div>
+</div>
+
+<!-- ========== ЯНДЕКС.КАРТЫ ========== -->
+<script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
+
+<script>
+    // ===== БУРГЕР, FAQ, МОДАЛКА =====
+    document.getElementById('burgerBtn').addEventListener('click',function(){document.getElementById('navMenu').classList.toggle('open')});
+    document.querySelectorAll('.nav a').forEach(l=>l.addEventListener('click',()=>document.getElementById('navMenu').classList.remove('open')));
+
+    document.querySelectorAll('.faq-q').forEach(b=>b.addEventListener('click',function(){
+        const item=this.parentElement, active=item.classList.contains('active');
+        document.querySelectorAll('.faq-item').forEach(el=>{el.classList.remove('active');el.querySelector('.faq-a').style.maxHeight=null});
+        if(!active){item.classList.add('active');item.querySelector('.faq-a').style.maxHeight=item.querySelector('.faq-a-inner').scrollHeight+'px'}
+    }));
+
+    const modal=document.getElementById('policyModal');
+    document.getElementById('openPolicyBtn').addEventListener('click',e=>{e.preventDefault();modal.classList.add('active')});
+    document.getElementById('closePolicyBtn').addEventListener('click',()=>modal.classList.remove('active'));
+    modal.addEventListener('click',e=>{if(e.target===modal)modal.classList.remove('active')});
+
+    // ===== ИНТЕРАКТИВНАЯ КАРТА И ТУЛТИПЫ =====
+    (function(){
+        const sportsList = [
+            'Спортшкола «Виктория» (Сыромолотова, 28а)',
+            'Спортшкола «Виктория» (КОСК «Россия», Высоцкого, 14)',
+            'Спортшкола «Виктория» (Панельная, 17/1)',
+            'Спортклуб «Ратиборец» (Сиреневый бульвар, 12)',
+            'Школа айкидо «Ёсинкан Рювакан» (Сиреневый бульвар, 15Б)',
+            'Шахматный клуб «Этюд» (Социум) (Новгородцевой, 7Б)'
+        ];
+        const clubsList = [
+            'Школа искусств (Высоцкого, 4а)',
+            'Музыкальная школа №13 (Бетонщиков, 3)',
+            'Алгоритмика — программирование (Сыромолотова, 14)',
+            'Изостудия «Краски мира» (Сиреневый бульвар, 15Б)',
+            'Студия почерка «Литера» (Сиреневый бульвар, 15Б)',
+            'Клуб «Импульс» (Социум) (Сыромолотова, 14)',
+            'Клуб «Россич» (Социум) (Сиреневый бульвар, 19а)',
+            'Клуб «Орион» (Социум) (Высоцкого, 10)',
+            'Клуб «Мечта» (Социум) (Высоцкого, 22)',
+            'Станция технического творчества (Социум) (Рассветная, 13)',
+            'Клуб Б6 (Бетонщиков, 6А)',
+            'Центр «Лик» (40 лет ВЛКСМ, 31а)',
+            'ЦК «Молодежный» (Высоцкого, 22)'
+        ];
+
+        const INSTITUTION_COORDS = {
+            'Спортшкола «Виктория» (Сыромолотова, 28а)':              [56.834195, 60.689329],
+            'Спортшкола «Виктория» (КОСК «Россия», Высоцкого, 14)':   [56.841342, 60.680591],
+            'Спортшкола «Виктория» (Панельная, 17/1)':                [56.830602, 60.690792],
+            'Спортклуб «Ратиборец» (Сиреневый бульвар, 12)':          [56.830118, 60.681311],
+            'Школа айкидо «Ёсинкан Рювакан» (Сиреневый бульвар, 15Б)':[56.832000, 60.688500],
+            'Шахматный клуб «Этюд» (Социум) (Новгородцевой, 7Б)':     [56.835461, 60.670849],
+            'Школа искусств (Высоцкого, 4а)':                         [56.840454, 60.673864],
+            'Музыкальная школа №13 (Бетонщиков, 3)':                  [56.834257, 60.696367],
+            'Алгоритмика — программирование (Сыромолотова, 14)':      [56.837184, 60.678916],
+            'Изостудия «Краски мира» (Сиреневый бульвар, 15Б)':       [56.832000, 60.688500],
+            'Студия почерка «Литера» (Сиреневый бульвар, 15Б)':       [56.832000, 60.688500],
+            'Клуб «Импульс» (Социум) (Сыромолотова, 14)':             [56.837184, 60.678916],
+            'Клуб «Россич» (Социум) (Сиреневый бульвар, 19а)':        [56.829694, 60.686596],
+            'Клуб «Орион» (Социум) (Высоцкого, 10)':                  [56.840266, 60.677739],
+            'Клуб «Мечта» (Социум) (Высоцкого, 22)':                  [56.841478, 60.686749],
+            'Станция технического творчества (Социум) (Рассветная, 13)': [56.839725, 60.687638],
+            'Клуб Б6 (Бетонщиков, 6А)':                               [56.832509, 60.695607],
+            'Центр «Лик» (40 лет ВЛКСМ, 31а)':                        [56.831946, 60.695546],
+            'ЦК «Молодежный» (Высоцкого, 22)':                        [56.841478, 60.686749]
+        };
+
+        let mapInstance = null;
+        const placemarks = [];
+        let tempPlacemarks = [];
+
+        function createTooltip(html) {
+            const existing = document.querySelector('.tag-tooltip');
+            if (existing) existing.remove();
+            const tooltip = document.createElement('div');
+            tooltip.className = 'tag-tooltip';
+            tooltip.innerHTML = html;
+            document.body.appendChild(tooltip);
+            return tooltip;
+        }
+
+        function showTooltip(e, content) {
+            const tooltip = createTooltip(content);
+            tooltip.style.display = 'block';
+            tooltip.style.visibility = 'hidden';
+
+            const rect = e.target.getBoundingClientRect();
+            const tooltipWidth = tooltip.offsetWidth;
+            const tooltipHeight = tooltip.offsetHeight;
+
+            let left = rect.left;
+            if (left + tooltipWidth > window.innerWidth - 10) {
+                left = window.innerWidth - tooltipWidth - 10;
+            }
+            if (left < 10) left = 10;
+
+            let top = rect.bottom + 8;
+            if (top + tooltipHeight > window.innerHeight - 10) {
+                top = rect.top - tooltipHeight - 8;
+            }
+            if (top < 10) top = 10;
+
+            tooltip.style.left = left + 'px';
+            tooltip.style.top = top + 'px';
+            tooltip.style.visibility = 'visible';
+        }
+
+        function hideTooltip() {
+            const tooltip = document.querySelector('.tag-tooltip');
+            if (tooltip) tooltip.remove();
+        }
+
+        function showCategoryOnMap(list, preset) {
+            clearCategoryPlacemarks();
+            list.forEach(name => {
+                const coords = INSTITUTION_COORDS[name];
+                if (!coords) return;
+                const pm = new ymaps.Placemark(coords, {
+                    hintContent: name,
+                    balloonContentHeader: name
+                }, { preset: preset });
+                mapInstance.geoObjects.add(pm);
+                tempPlacemarks.push(pm);
+            });
+        }
+
+        function clearCategoryPlacemarks() {
+            tempPlacemarks.forEach(pm => mapInstance.geoObjects.remove(pm));
+            tempPlacemarks = [];
+        }
+
+        function waitForYmaps(callback, attempts) {
+            attempts = attempts || 0;
+            if (typeof ymaps !== 'undefined' && ymaps.ready) {
+                ymaps.ready(callback);
+            } else if (attempts < 50) {
+                setTimeout(function() { waitForYmaps(callback, attempts + 1); }, 200);
+            } else {
+                console.error('Яндекс.Карты не загрузились.');
+            }
+        }
+
+        waitForYmaps(function(){
+            mapInstance = new ymaps.Map("mapContainer", {
+                center: [56.835, 60.68],
+                zoom: 14,
+                controls: ['zoomControl']
+            });
+            mapInstance.behaviors.disable('scrollZoom');
+
+            document.querySelectorAll('.tag-school').forEach(tag => {
+                const coords = JSON.parse(tag.dataset.coords);
+                const name = tag.textContent.trim();
+                const placemark = new ymaps.Placemark(coords, {
+                    hintContent: 'Школа ' + name,
+                    balloonContentHeader: 'Школа ' + name
+                }, {
+                    preset: 'islands#blueCircleDotIcon',
+                    visible: false
+                });
+                mapInstance.geoObjects.add(placemark);
+                placemarks.push({ element: tag, placemark: placemark });
+            });
+
+            document.querySelectorAll('.tag-direction[data-coords]').forEach(tag => {
+                const coords = JSON.parse(tag.dataset.coords);
+                const name = tag.textContent.trim();
+                const pm = new ymaps.Placemark(coords, {
+                    hintContent: name,
+                    balloonContentHeader: name
+                }, { preset: 'islands#orangeCircleDotIcon', visible: false });
+                mapInstance.geoObjects.add(pm);
+                placemarks.push({ element: tag, placemark: pm });
+            });
+
+            document.querySelectorAll('.tag-school, .tag-direction[data-coords]').forEach(el => {
+                el.addEventListener('mouseenter', function() {
+                    const found = placemarks.find(p => p.element === this);
+                    if (found) {
+                        found.placemark.options.set('visible', true);
+                        mapInstance.panTo(found.placemark.geometry.getCoordinates(), { duration: 300 });
+                    }
+                });
+                el.addEventListener('mouseleave', function() {
+                    const found = placemarks.find(p => p.element === this);
+                    if (found) found.placemark.options.set('visible', false);
+                });
+            });
+
+            const sportsTag = document.getElementById('tagSports');
+            const clubsTag = document.getElementById('tagClubs');
+            const homeTag = document.getElementById('tagHome');
+
+            function buildSportsHtml() {
+                let html = '<div class="tooltip-title">⚽ Спортивные секции</div><ul>';
+                sportsList.forEach(item => html += `<li>${item}</li>`);
+                html += '</ul>';
+                return html;
+            }
+            function buildClubsHtml() {
+                let html = '<div class="tooltip-title">🎨 Кружки и клубы</div><ul>';
+                clubsList.forEach(item => html += `<li>${item}</li>`);
+                html += '</ul>';
+                return html;
+            }
+
+            if (sportsTag) {
+                sportsTag.addEventListener('mouseenter', function(e) {
+                    showTooltip(e, buildSportsHtml());
+                    showCategoryOnMap(sportsList, 'islands#darkGreenCircleDotIcon');
+                });
+                sportsTag.addEventListener('mouseleave', function() {
+                    hideTooltip();
+                    clearCategoryPlacemarks();
+                });
+            }
+            if (clubsTag) {
+                clubsTag.addEventListener('mouseenter', function(e) {
+                    showTooltip(e, buildClubsHtml());
+                    showCategoryOnMap(clubsList, 'islands#violetCircleDotIcon');
+                });
+                clubsTag.addEventListener('mouseleave', function() {
+                    hideTooltip();
+                    clearCategoryPlacemarks();
+                });
+            }
+            if (homeTag) {
+                homeTag.addEventListener('mouseenter', function(e) {
+                    showTooltip(e, '<div class="tooltip-home">🏠 Где дом?!</div>');
+                });
+                homeTag.addEventListener('mouseleave', hideTooltip);
+            }
+
+            document.addEventListener('scroll', function() { hideTooltip(); clearCategoryPlacemarks(); });
+            document.addEventListener('click', function() { hideTooltip(); clearCategoryPlacemarks(); });
+        });
+    })();
+
+    // ===== КАЛЬКУЛЯТОР =====
+    const STREETS_DATA={
+        'Сыромолотова':['7','9','11','11а','11б','11в','13','14','15','16','16а','17','18','19','20','21','21а','23','24','25','25а','26','26а','27','27а','27б','28','28а','29','30','31','32','34'],
+        'Сиреневый бульвар':['1','3','4','4/1','4/2','4/3','4/4','4/5','4/6','5','6','7','7а','8','9','10','11','12','12а','13','14','14/1','14/2','15','16','17','18','18/1','19','19а','20','21','23'],
+        'Высоцкого':['1','2','3','4','4а','5','5а','5б','5в','6','7','8','9','10','11','12','13','14','15','16','17','17/1','17/2','17/3','17/4','17б','17г','18','18а','18б','19','20','21','22','24','26','28','30','32','34','36','38','40'],
+        'Рассветная':['1','2','2Б','2В','2Д','2Ж','3','4','5','5/1','5/2','5/3','5/4','6','6/1','6/2','6/3','7','8','8/1','8/2','9','9а','10','11','11а','12','13','14','15','16','17'],
+        'Новгородцевой':['1','2','3','3а','3б','4','4а','5','6','6а','7','7а','7б','8','9','9/1','9/2','9/3','10','11','11/1','11/2','11/3','12','13','13а','13б','15','17','17а','19','19/1','19/2','20','21','22','23','23а','24','24а','25','25/1','25/2','26','26/1','26/2','26/3','27','28','29','30','31','32','33','34','35','36','37','38','39','40','41','43'],
+        'Бетонщиков':['1','1а','2','3','4','5','5а','6','6А'],
+        '40 лет ВЛКСМ':['1','1а','1б','1в','1г','2','2а','2б','2в','2г','2д','2ж','2и','3','3а','3б','3в','4','4а','4б','4в','4д','4ж','5','7','7а','7б','9','11','11а','13','13а','15','15а','17','19','21','23','23а','25','27','27б','27в','29','31','31а','32','32а','33','33а','35','37','38','38а','38б','38в','38г','38д','38е','38ж','38и','38к','39','40','42','42а','42б','44','46','46а','48','50','52','54'],
+        'Алданская':['1','2','4','6','8','10','11','13','15','17','19','21','22','24','25','26','28','30','32','34','36'],
+        'Панельная':['1','1/2','1а','1б','3','3а','4','5','7','9','11','13','13а','15','17','17/1','17а','17б','19','21']
+    };
+    const STREET_NAMES=Object.keys(STREETS_DATA);
+
+    let currentStep=1,totalSteps=5,currentMonth=new Date().getMonth(),currentYear=new Date().getFullYear(),selectedDates=new Set(),currentDirection='home-to-inst',isFriend=false,isForceMajeure=false;
+
+    function populateStreets(prefix){const sel=document.getElementById('street'+prefix);if(!sel)return;sel.innerHTML='<option value="">Выберите улицу...</option>';STREET_NAMES.forEach(s=>{sel.innerHTML+=`<option value="${s}">${s}</option>`})}
+    function fillEntrances(prefix){const sel=document.getElementById('entrance'+prefix);if(!sel)return;sel.innerHTML='<option value="">Подъезд</option>';for(let i=1;i<=20;i++){const opt=document.createElement('option');opt.value=i;opt.textContent=i;sel.appendChild(opt)}}
+    function updateHouses(prefix){const street=document.getElementById('street'+prefix).value,houseSel=document.getElementById('house'+prefix);houseSel.innerHTML='<option value="">Дом...</option>';if(street&&STREETS_DATA[street]){STREETS_DATA[street].forEach(h=>{houseSel.innerHTML+=`<option value="${h}">${h}</option>`})}updateAddressDisplay(prefix)}
+    function updateAddressDisplay(prefix){const street=document.getElementById('street'+prefix).value,house=document.getElementById('house'+prefix).value,entrance=document.getElementById('entrance'+prefix).value,display=document.getElementById('addressDisplay'+prefix);if(!display)return;let parts=[];if(street)parts.push(street);if(house)parts.push(house);if(entrance)parts.push('подъезд '+entrance);display.textContent=parts.length?'📍 '+parts.join(', '):''}
+
+    function updateRadioSelection(){
+        document.querySelectorAll('.radio-card').forEach(card=>{
+            const radio=card.querySelector('input[type="radio"]');
+            if(radio && radio.checked){card.classList.add('selected')}else{card.classList.remove('selected')}
+        });
+    }
+
+    function initCalculator(){
+        populateStreets('A');populateStreets('B');populateStreets('Friend');
+        fillEntrances('A');fillEntrances('B');fillEntrances('Friend');
+        renderCalendar();
+        setupDirectionListener();
+        setupRadioListeners();
+        updateAddressFields();
+        updateRadioSelection();
+        document.getElementById('forceMajeure').addEventListener('change', function(){
+            isForceMajeure = this.checked;
+            if(isForceMajeure){
+                document.getElementById('optFriend').classList.remove('selected');
+                document.getElementById('optSingle').classList.add('selected');
+                document.querySelector('input[name="companyType"][value="single"]').checked = true;
+                isFriend = false;
+                document.getElementById('friendWarning').style.display = 'none';
+                document.getElementById('friendAddressBlock').style.display = 'none';
+                updateRadioSelection();
+            }
+        });
+    }
+
+    function setupDirectionListener(){
+        document.querySelectorAll('input[name="direction"]').forEach(r=>{r.addEventListener('change',function(){
+            currentDirection=this.value;updateAddressFields();updateRadioSelection();
+        })});
+    }
+
+    function setupRadioListeners(){
+        document.querySelectorAll('.radio-card input').forEach(r=>{r.addEventListener('change',function(){
+            const parent=this.closest('.radio-card');
+            document.querySelectorAll('.radio-card').forEach(c=>c.classList.remove('selected'));
+            if(this.checked)parent.classList.add('selected');
+            if(this.name==='needReturn'){
+                document.getElementById('returnBlock').style.display=this.value==='yes'?'block':'none';
+                updateWaitingHint();
+            }
+            if(this.name==='companyType'){
+                isFriend=this.value==='friend';
+                document.getElementById('friendWarning').style.display=isFriend?'block':'none';
+                document.getElementById('friendAddressBlock').style.display=isFriend?'block':'none';
+                if(isForceMajeure){
+                    document.getElementById('optSingle').classList.add('selected');
+                    document.getElementById('optFriend').classList.remove('selected');
+                    document.querySelector('input[name="companyType"][value="single"]').checked = true;
+                    isFriend = false;
+                    document.getElementById('friendWarning').style.display = 'none';
+                    document.getElementById('friendAddressBlock').style.display = 'none';
+                }
+            }
+            updateRadioSelection();
+        })});
+        document.getElementById('arrivalTime').addEventListener('change',updateWaitingHint);
+        document.getElementById('returnTime').addEventListener('change',updateWaitingHint);
+        document.getElementById('instB').addEventListener('change',function(){const other=document.getElementById('instBother');if(this.value==='other'){other.style.display='block';other.required=true}else{other.style.display='none';other.required=false;other.value=''}});
+    }
+
+    function updateAddressFields(){
+        const labelA=document.getElementById('pointALabel'),labelB=document.getElementById('pointBLabel');
+        const addressFieldsA=document.getElementById('addressFieldsA'),instFieldsA=document.getElementById('instFieldsA');
+        const addressFieldsB=document.getElementById('addressFieldsB'),instFieldsB=document.getElementById('instFieldsB');
+        addressFieldsA.style.display='none';instFieldsA.style.display='none';addressFieldsB.style.display='none';instFieldsB.style.display='none';
+        if(currentDirection==='home-to-inst'){labelA.textContent='Точка А (откуда) — адрес ребёнка:';labelB.textContent='Точка Б (куда) — учреждение:';addressFieldsA.style.display='flex';instFieldsB.style.display='flex';document.getElementById('addressDisplayA').textContent='';document.getElementById('addressDisplayB').textContent=''}
+        else if(currentDirection==='inst-to-home'){labelA.textContent='Точка А (откуда) — учреждение:';labelB.textContent='Точка Б (куда) — адрес ребёнка:';instFieldsA.style.display='flex';addressFieldsB.style.display='flex';document.getElementById('addressDisplayA').textContent='';document.getElementById('addressDisplayB').textContent=''}
+        else if(currentDirection==='inst-to-inst'){labelA.textContent='Точка А (откуда) — учреждение:';labelB.textContent='Точка Б (куда) — учреждение:';instFieldsA.style.display='flex';instFieldsB.style.display='flex';document.getElementById('addressDisplayA').textContent='';document.getElementById('addressDisplayB').textContent=''}
+        updateRadioSelection();
+    }
+
+    function renderCalendar(){
+        const grid=document.getElementById('calendarGrid'),monthNames=['Январь','Февраль','Март','Апрель','Май','Июнь','Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'];
+        document.getElementById('monthYearDisplay').textContent=monthNames[currentMonth]+' '+currentYear;
+        grid.innerHTML='';['Пн','Вт','Ср','Чт','Пт','Сб','Вс'].forEach(d=>{const el=document.createElement('div');el.className='cal-day-name';el.textContent=d;grid.appendChild(el)});
+        const firstDay=new Date(currentYear,currentMonth,1).getDay(),daysInMonth=new Date(currentYear,currentMonth+1,0).getDate(),today=new Date(),todayDate=today.getDate(),todayMonth=today.getMonth(),todayYear=today.getFullYear();
+        let shift=firstDay===0?6:firstDay-1;
+        for(let i=0;i<shift;i++){const el=document.createElement('div');el.className='cal-day empty';grid.appendChild(el)}
+        for(let d=1;d<=daysInMonth;d++){const dateObj=new Date(currentYear,currentMonth,d),isWeekend=dateObj.getDay()===0||dateObj.getDay()===6,isToday=d===todayDate&&currentMonth===todayMonth&&currentYear===todayYear,dateStr=`${currentYear}-${String(currentMonth+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`,isPast=dateObj<new Date(todayYear,todayMonth,todayDate);const el=document.createElement('div');el.className='cal-day';if(isWeekend)el.classList.add('weekend');if(isToday)el.style.border='2px solid #2563eb';if(selectedDates.has(dateStr))el.classList.add('selected');if(isPast){el.style.opacity='0.3';el.style.cursor='default'}el.textContent=d;el.dataset.date=dateStr;el.addEventListener('click',function(){if(isPast)return;const ds=this.dataset.date;if(selectedDates.has(ds)){selectedDates.delete(ds);this.classList.remove('selected')}else{selectedDates.add(ds);this.classList.add('selected')}document.getElementById('selectedDaysCount').textContent=selectedDates.size});grid.appendChild(el)}
+    }
+    function changeMonth(delta){currentMonth+=delta;if(currentMonth<0){currentMonth=11;currentYear--}if(currentMonth>11){currentMonth=0;currentYear++}renderCalendar()}
+
+    function updateWaitingHint(){
+        const needReturnRadio=document.querySelector('input[name="needReturn"]:checked');
+        const needReturn=needReturnRadio?needReturnRadio.value==='yes':false;
+        const hint=document.getElementById('waitingHint');
+        if(!needReturn){hint.style.display='none';return}
+        const arr=document.getElementById('arrivalTime').value,ret=document.getElementById('returnTime').value;
+        if(!arr||!ret){hint.style.display='none';return}
+        const dur=document.getElementById('waitingDuration'),rec=document.getElementById('tariffRecommendation');
+        const[ah,am]=arr.split(':').map(Number),[rh,rm]=ret.split(':').map(Number);
+        let diff=(rh+rm/60)-(ah+am/60);if(diff<0)diff+=24;diff=Math.round(diff*10)/10;
+        dur.textContent=diff;
+        if(diff>0){
+            hint.style.display='block';
+            if(diff<=1.5){rec.textContent='→ Тариф «Ждун» (до 2 уроков)';rec.style.color='#b45309'}
+            else{rec.textContent='→ Тариф «Туда-Обратно»';rec.style.color='#2563eb'}
+        }else{hint.style.display='none'}
+    }
+
+    function goToStep(step){
+        if(step<1||step>totalSteps)return;
+        if(step>currentStep){
+            if(currentStep===2){const selected = document.querySelector('input[name="needReturn"]:checked');if(!selected){alert('Выберите вариант маршрута.');return}}
+            if(currentStep===3){
+                const selected = document.querySelector('input[name="companyType"]:checked');
+                if(!selected){alert('Выберите количество детей.');return}
+                if(isForceMajeure && selected && selected.value==='friend'){alert('При форс-мажоре скидка за попутчика не применяется. Выберите "Один ребёнок".');document.querySelector('input[name="companyType"][value="single"]').checked = true;updateRadioSelection();return}
+            }
+            if(!validateStep(currentStep))return;
+        }
+        document.querySelectorAll('.step-panel').forEach(el=>el.classList.remove('active'));
+        document.getElementById('step'+step).classList.add('active');
+        document.querySelectorAll('.calc-progress span').forEach(el=>el.classList.remove('active'));
+        document.getElementById('p-step-'+step).classList.add('active');
+        currentStep=step;
+        document.getElementById('btnPrev').style.display=step===1?'none':'block';
+        if(step===totalSteps){document.getElementById('btnNext').style.display='none';document.getElementById('btnSubmit').style.display='block';calculateResults()}else{document.getElementById('btnNext').style.display='block';document.getElementById('btnSubmit').style.display='none'}
+        document.getElementById('calculator').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        updateRadioSelection();
+    }
+
+    function validateStep(step){
+        if(step===1){
+            let valid=true;
+            if(currentDirection==='home-to-inst'){
+                const streetA=document.getElementById('streetA').value,houseA=document.getElementById('houseA').value,instB=document.getElementById('instB').value;
+                if(!streetA||!houseA){alert('Выберите улицу и дом для точки А.');valid=false}
+                if(!instB){alert('Выберите учреждение в точке Б.');valid=false}
+                if(instB==='other'){const other=document.getElementById('instBother');if(!other.value.trim()){alert('Введите адрес учреждения.');valid=false}}
+            }else if(currentDirection==='inst-to-home'){
+                const instA=document.getElementById('instA').value,streetB=document.getElementById('streetB').value,houseB=document.getElementById('houseB').value;
+                if(!instA){alert('Выберите учреждение в точке А.');valid=false}
+                if(!streetB||!houseB){alert('Выберите улицу и дом для точки Б.');valid=false}
+            }else if(currentDirection==='inst-to-inst'){
+                const instA=document.getElementById('instA').value,instB=document.getElementById('instB').value;
+                if(!instA){alert('Выберите учреждение в точке А.');valid=false}
+                if(!instB){alert('Выберите учреждение в точке Б.');valid=false}
+                if(instB==='other'){const other=document.getElementById('instBother');if(!other.value.trim()){alert('Введите адрес учреждения.');valid=false}}
+            }
+            return valid;
+        }
+        return true;
+    }
+
+    function calculateResults(){
+        let addressA='',addressB='',addressFriend='';
+        if(currentDirection==='home-to-inst'){const streetA=document.getElementById('streetA').value,houseA=document.getElementById('houseA').value,entranceA=document.getElementById('entranceA').value;addressA=streetA+', '+houseA+(entranceA?', подъезд '+entranceA:'');const instB=document.getElementById('instB').value;addressB=instB==='other'?document.getElementById('instBother').value:instB}
+        else if(currentDirection==='inst-to-home'){const instA=document.getElementById('instA').value;addressA=instA;const streetB=document.getElementById('streetB').value,houseB=document.getElementById('houseB').value,entranceB=document.getElementById('entranceB').value;addressB=streetB+', '+houseB+(entranceB?', подъезд '+entranceB:'')}
+        else{const instA=document.getElementById('instA').value;addressA=instA;const instB=document.getElementById('instB').value;addressB=instB==='other'?document.getElementById('instBother').value:instB}
+        if(isFriend && !isForceMajeure){const streetF=document.getElementById('streetFriend').value,houseF=document.getElementById('houseFriend').value,entranceF=document.getElementById('entranceFriend').value;addressFriend=streetF+', '+houseF+(entranceF?', подъезд '+entranceF:'')}
+        const arrTime=document.getElementById('arrivalTime').value,needReturn=document.querySelector('input[name="needReturn"]:checked').value==='yes',retTime=document.getElementById('returnTime').value,days=selectedDates.size;
+        let tariff='',price=0,total=0,waitHours=0;
+        if(needReturn&&arrTime&&retTime){const[ah,am]=arrTime.split(':').map(Number),[rh,rm]=retTime.split(':').map(Number);let diff=(rh+rm/60)-(ah+am/60);if(diff<0)diff+=24;waitHours=Math.round(diff*10)/10}
+        if(isForceMajeure){tariff='Срочный Форс-мажор';price=600}
+        else{if(needReturn){if(waitHours<=1.5&&waitHours>0){tariff='Ждун (Короткий)';price=550}else{tariff='Туда-Обратно (Длинный)';price=225}}else{if(days<=3){tariff='Пробный / Разовый';price=300}else{tariff='В одну сторону (Пакет)';price=250}}}
+        if(isFriend && !isForceMajeure){if(tariff==='Ждун (Короткий)'){price=400}else if(tariff==='Туда-Обратно (Длинный)'){price=200}else{price-=50}document.getElementById('discountAlert').style.display='block'}else{document.getElementById('discountAlert').style.display='none'}
+        if(tariff==='Туда-Обратно (Длинный)'){total=price*2*days}else{total=price*days}
+        const routeText=addressA+' → '+addressB;
+        document.getElementById('resRoute').textContent=routeText;
+        document.getElementById('resTime').textContent=arrTime;
+        document.getElementById('resReturn').textContent=needReturn?'Да, в '+retTime+' (ожидание '+waitHours+' ч)':'Нет';
+        document.getElementById('resChildren').textContent=(isFriend && !isForceMajeure)?'Двое (со скидкой)':'Один';
+        document.getElementById('resDays').textContent=days+' дн.';
+        document.getElementById('resTariff').textContent=tariff;
+        document.getElementById('resPrice').textContent=price+' ₽'+(tariff==='Туда-Обратно (Длинный)'?' / рейс':'');
+        document.getElementById('resTotal').textContent=total+' ₽';
+        window.lastCalcData={route:routeText,tariff:tariff,total:total,days:days,addressA:addressA,addressB:addressB,addressFriend:addressFriend,timeArrival:arrTime,timeReturn:needReturn?retTime:'Нет',direction:currentDirection};
+    }
+
+    function submitForm() {
+        document.getElementById('notificationSuccess').style.display = 'none';
+        document.getElementById('notificationError').style.display = 'none';
+        document.querySelectorAll('.field-error').forEach(el => el.classList.remove('field-error'));
+        document.querySelectorAll('.error-hint').forEach(el => el.style.display = 'none');
+        const name = document.getElementById('userName').value.trim();
+        const phone = document.getElementById('userPhone').value.trim();
+        const agreement = document.getElementById('agreement').checked;
+        let hasError = false;
+        if (!name) { document.getElementById('userName').classList.add('field-error'); document.getElementById('userNameError').style.display = 'block'; hasError = true; }
+        if (!phone) { document.getElementById('userPhone').classList.add('field-error'); document.getElementById('userPhoneError').style.display = 'block'; hasError = true; }
+        if (!agreement) { document.getElementById('agreementError').style.display = 'block'; hasError = true; }
+        if (hasError) { const firstError = document.querySelector('.field-error, #agreementError[style*="display: block"]'); if (firstError) { firstError.scrollIntoView({ behavior: 'smooth', block: 'center' }); } return; }
+        if (!window.lastCalcData) { calculateResults(); if (!window.lastCalcData) { showNotification('error', 'Ошибка расчёта. Попробуйте ещё раз.'); return; } }
+        const data = window.lastCalcData;
+        const daysMap = ['Вс','Пн','Вт','Ср','Чт','Пт','Сб'];
+        const selectedDatesArray = Array.from(selectedDates).sort();
+        const datesStr = selectedDatesArray.map(dateStr => {
+            const parts = dateStr.split('-');
+            const year = parseInt(parts[0]);
+            const month = parseInt(parts[1]) - 1;
+            const day = parseInt(parts[2]);
+            const dateObj = new Date(year, month, day);
+            const dayName = daysMap[dateObj.getDay()];
+            const formattedDate = `${String(day).padStart(2,'0')}.${String(month+1).padStart(2,'0')}`;
+            return `${dayName}, ${formattedDate}`;
+        }).join('; ');
+        const payload = { name, phone, addressA: data.addressA || '', addressB: data.addressB || '', addressFriend: data.addressFriend || '', timeArrival: data.timeArrival || '', timeReturn: data.timeReturn || 'Нет', direction: data.direction || '', tariff: data.tariff || '', total: data.total || '', days: data.days || '', route: data.route || '', selectedDates: datesStr || 'не выбраны' };
+        const btn = document.getElementById('btnSubmit');
+        btn.disabled = true;
+        document.getElementById('submitText').style.display = 'none';
+        document.getElementById('submitSpinner').style.display = 'inline-block';
+        const formspreeUrl = 'https://formspree.io/f/xjyvogoz';
+        fetch(formspreeUrl, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) })
+        .then(response => { if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`); return response.json(); })
+        .then(result => {
+            console.log('✅ Ответ Formspree:', result);
+            if (result.ok) {
+                showNotification('success', '✅ Заявка успешно отправлена! Я свяжусь с вами в ближайшее время.');
+                saveToLocalStorage(payload);
+                sendToGoogleSheets(payload);
+                setTimeout(() => { resetForm(); }, 2000);
+            } else {
+                showNotification('error', '⚠️ Заявка сохранена локально. Свяжитесь со мной напрямую.');
+                console.error('❌ Ошибка Formspree:', result);
+                saveToLocalStorage(payload); sendToGoogleSheets(payload);
+                btn.disabled = false; document.getElementById('submitText').style.display = 'inline'; document.getElementById('submitSpinner').style.display = 'none';
+            }
+        })
+        .catch(error => {
+            console.error('❌ Ошибка отправки в Formspree:', error);
+            showNotification('error', '⚠️ Не удалось отправить заявку. Данные сохранены локально. Позвоните мне по телефону <strong>+7 995 389-14-23</strong>.');
+            saveToLocalStorage(payload); sendToGoogleSheets(payload);
+            btn.disabled = false; document.getElementById('submitText').style.display = 'inline'; document.getElementById('submitSpinner').style.display = 'none';
+        });
+    }
+
+    function sendToGoogleSheets(payload) {
+        const googleSheetUrl = 'https://script.google.com/macros/s/AKfycbyDgBAn0SLQBEvdJ65RqD9ZS6x7tPjcqZqSRf5KTRcak-Y3BHp5wJZw4GrorHm4D_p4/exec';
+        console.log('📤 Отправка в Google Таблицу, данные:', payload);
+        fetch(googleSheetUrl, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) })
+        .then(() => console.log('✅ Данные отправлены в Google Таблицу'))
+        .catch(error => console.error('❌ Ошибка отправки в Google Таблицу:', error));
+    }
+
+    function showNotification(type, message) {
+        const successEl = document.getElementById('notificationSuccess'), errorEl = document.getElementById('notificationError');
+        if (type === 'success') { successEl.querySelector('.text').innerHTML = message; successEl.style.display = 'flex'; errorEl.style.display = 'none'; }
+        else { errorEl.querySelector('.text').innerHTML = message; errorEl.style.display = 'flex'; successEl.style.display = 'none'; }
+        setTimeout(() => { successEl.style.display = 'none'; errorEl.style.display = 'none'; }, 8000);
+    }
+
+    function saveToLocalStorage(payload) {
+        try { let saved = JSON.parse(localStorage.getItem('routeData') || '[]'); saved.push({ ...payload, timestamp: new Date().toLocaleString('ru-RU') }); localStorage.setItem('routeData', JSON.stringify(saved)); console.log('✅ Данные сохранены в localStorage'); } catch (e) { console.warn('⚠️ Не удалось сохранить в localStorage:', e); }
+    }
+
+    function resetForm() {
+        document.getElementById('mainCalcForm').reset();
+        selectedDates.clear(); renderCalendar();
+        document.getElementById('selectedDaysCount').textContent = 0;
+        const btn = document.getElementById('btnSubmit');
+        btn.disabled = false; document.getElementById('submitText').style.display = 'inline'; document.getElementById('submitSpinner').style.display = 'none';
+        document.getElementById('forceMajeure').checked = false; isForceMajeure = false;
+        goToStep(1);
+    }
+
+    document.addEventListener('DOMContentLoaded', initCalculator);
+</script>
+</body>
+</html>
